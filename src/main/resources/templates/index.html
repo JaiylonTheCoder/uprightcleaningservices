@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Upright Cleaning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/banner.css}">
+    <link rel="stylesheet" href="" th:href="@{css/footer.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/services.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/testimonials.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/gallery.scss}">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <link rel="icon" th:href="@{/img/LOGO.png}">
+    <script src="@{js/main.js}" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    gsap.to('.banner-section', { duration: 2, opacity: 1, ease: 'power2.inOut' });
+});
+    </script>
+</head>
+<body>
+<nav>
+    <div class="logo" style="display: flex; align-items: center;">
+        <img th:src="@{/img/LOGO.png}" alt="logo" style="height: 50px; margin-right: 20px;">
+        <span style="color:#08A045; font-size:26px; font-weight:bold; letter-spacing: 1px;">Upright Cleaning Services</span>
+    </div>
+    <div class="hamburger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+    <ul class="nav-links">
+        <li><a th:href="@{/index}">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact-us">Contact Us</a></li>
+<!--        <li th:if="${#authorization.expression('isAuthenticated()')}">-->
+<!--            <a th:href="@{/user/profile}">Profile</a>-->
+<!--        </li>-->
+        <!-- If user is not authenticated, display login link -->
+        <li th:unless="${#authorization.expression('isAuthenticated()')}">
+            <a th:href="@{/login}">Login</a>
+        </li>
+        <!-- Display username if logged in -->
+        <li th:if="${#authorization.expression('isAuthenticated()')}">
+            <a th:href="@{/user/profile}"><span><span th:text="${#authentication.name}"></span></span></a>
+<!--            <span>Welcome, <span th:text="${#authentication.name}"></span></span>-->
+        </li>
+
+    </ul>
+</nav>
+<script src="/js/main.js"></script>
+
+<!--Banner Section-->
+<section class="banner-section">
+    <video class="banner-video" autoplay muted loop>
+        <source th:src="@{/img/background-video}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="banner-message" style="font-weight: bold;">
+        <h1 style="font-size: 32px;">Welcome to Upright Cleaning Services</h1>
+        <p>Transforming spaces with cleanliness</p>
+    </div>
+    <div class="banner-buttons">
+        <li th:if="${#authorization.expression('!isAuthenticated()')}">
+            <button class="signup-button btn" th:href="@{/register}">Sign Up</button>
+        </li>
+        <a href="#services" class="cta-button btn">Learn More</a>
+    </div>
+    <div class="custom-shape-divider-top-1718127610">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+        </svg>
+    </div>
+</section>
+<div class="services-section" id="services">
+    <div class="service-body">
+        <div class="custom-shape-divider-top-1718127610">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        <h1>Our Services</h1>
+        <div class="services-cards">
+            <div id="card-1" class="service-card">
+                <div class="card-title">Yard Maintenance</div>
+                <div class="card-body">Keep your outdoor space immaculate with our comprehensive yard maintenance services. From mowing and trimming to seasonal cleanups, we ensure your yard looks pristine year-round.</div>
+                <br>
+                <button class="card-button">View More</button>
+            </div>
+            <div id="card-2" class="service-card">
+                <div class="card-title">Bathroom Cleaning</div>
+                <div class="card-body">Our professional bathroom cleaning service tackles tough grime and bacteria, leaving your bathroom sparkling clean and sanitized. Enjoy a fresh and hygienic space every day.</div>
+                <br>
+                <button class="card-button">View More</button>
+            </div>
+            <div id="card-3" class="service-card">
+                <div class="card-title">Laundry Services</div>
+                <div class="card-body">Save time and effort with our convenient laundry services. We handle everything from washing and drying to folding and ironing, so you can focus on what matters most.
+                </div>
+                <br>
+                <button class="card-button">View More</button>
+            </div>
+            <div id="card-4" class="service-card">
+                <div class="card-title">Upholstery Cleaning</div>
+                <div class="card-body">Revitalize your furniture with our expert upholstery cleaning. We remove dirt, stains, and allergens, restoring your furniture to its original beauty and extending its lifespan.</div>
+                <br>
+                <button class="card-button">View More</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="CSSgal">-->
+
+<!--    &lt;!&ndash; Don't wrap targets in parent &ndash;&gt;-->
+<!--    <s id="s1"></s>-->
+<!--    <s id="s2"></s>-->
+<!--    <s id="s3"></s>-->
+<!--    <s id="s4"></s>-->
+
+<!--    <div class="slider">-->
+<!--        <div style="background:#5b8;">-->
+<!--            <h2>UPRIGHT CLEANING IMAGES</h2>-->
+<!--        </div>-->
+<!--        <div style="background:#85b; background-image: url('/img/upright_img2.jpeg');">-->
+<!--            <h2>Slide 2</h2>-->
+<!--        </div>-->
+<!--        <div style="background:#e95;">-->
+<!--            <h2>Slide 3</h2>-->
+<!--        </div>-->
+<!--        <div style="background-image: url('/img/upright_img1.jpeg');">-->
+<!--            <h2>Slide 4</h2>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="prevNext">-->
+<!--        <div><a href="#s4"></a><a href="#s2"></a></div>-->
+<!--        <div><a href="#s1"></a><a href="#s3"></a></div>-->
+<!--        <div><a href="#s2"></a><a href="#s4"></a></div>-->
+<!--        <div><a href="#s3"></a><a href="#s1"></a></div>-->
+<!--    </div>-->
+
+<!--    <div class="bullets">-->
+<!--        <a href="#s1">1</a>-->
+<!--        <a href="#s2">2</a>-->
+<!--        <a href="#s3">3</a>-->
+<!--        <a href="#s4">4</a>-->
+<!--    </div>-->
+
+<!--</div>-->
+
+<section class="gallery">
+    <div class="gallery__item">
+        <input type="radio" id="img-1" checked name="gallery" class="gallery__selector"/>
+        <img class="gallery__img" src="https://picsum.photos/id/1015/600/400.jpg" alt=""/>
+        <label for="img-1" class="gallery__thumb"><img src="https://picsum.photos/id/1015/150/100.jpg" alt=""/></label>
+    </div>
+    <div class="gallery__item">
+        <input type="radio" id="img-2" name="gallery" class="gallery__selector"/>
+        <img class="gallery__img" src="https://picsum.photos/id/1039/600/400.jpg" alt=""/>
+        <label for="img-2" class="gallery__thumb"><img src="https://picsum.photos/id/1039/150/100.jpg" alt=""/></label>
+    </div>
+    <div class="gallery__item">
+        <input type="radio" id="img-3" name="gallery" class="gallery__selector"/>
+        <img class="gallery__img" src="https://picsum.photos/id/1057/600/400.jpg" alt=""/>
+        <label for="img-3" class="gallery__thumb"><img src="https://picsum.photos/id/1057/150/100.jpg" alt=""/></label>
+    </div>
+    <div class="gallery__item">
+        <input type="radio" id="img-4" name="gallery" class="gallery__selector"/>
+        <img class="gallery__img" src="https://picsum.photos/id/106/600/400.jpg" alt=""/>
+        <label for="img-4" class="gallery__thumb"><img src="https://picsum.photos/id/106/150/100.jpg" alt=""/></label>
+    </div>
+</section>
+<div class="testimonial-section" id="testimonials" style="height: 50vh">
+    <figure class="snip1533">
+        <figcaption>
+            <blockquote>
+                <p>The cleaning service was so thorough, my place has never looked better. Truly impressed!</p>
+            </blockquote>
+            <h3>Wisteria Ravenclaw</h3>
+            <h4>Google Inc.</h4>
+        </figcaption>
+    </figure>
+    <figure class="snip1533">
+        <figcaption>
+            <blockquote>
+                <p>They turned my home into a sparkling haven. I can now relax and enjoy a clean, fresh environment.</p>
+            </blockquote>
+            <h3>Ursula Gurnmeister</h3>
+            <h4>Facebook</h4>
+        </figcaption>
+    </figure>
+    <figure class="snip1533">
+        <figcaption>
+            <blockquote>
+                <p>The team was efficient, friendly, and left my office spotless. Highly recommend their services!</p>
+            </blockquote>
+            <h3>Ingredia Nutrisha</h3>
+            <h4>Twitter</h4>
+        </figcaption>
+    </figure>
+
+</div>
+<footer>
+    <div class="f-item-con">
+        <div class="app-info">
+                <span class='app-name'>
+                    <span class='app-initial'>U</span>right Cleaning Services
+                </span>
+            <p>We provide you with <strong>meticulous cleaning</strong> and <strong>exceptional service</strong> for your home or office.</p>
+        </div>
+        <div class="useful-links">
+            <div class="footer-title">Useful Links</div>
+            <ul>
+                <li><a th:href="@{/register}" ></a></li>
+                <li>About Us</li>
+<!--                <li>Become an Affiliate</li>-->
+<!--                <li>Advertise with Us</li>-->
+                <li>Terms and Conditions</li>
+            </ul>
+        </div>
+        <div class="help-sec">
+            <div class="footer-title">Help</div>
+            <ul>
+                <li>Help Me</li>
+                <li>Feedback</li>
+                <li>Report a Issue / Bug</li>
+            </ul>
+        </div>
+        <div class="g-i-t">
+            <div class="footer-title">Get in Touch</div>
+            <form th:action="@{/contact}" method="post" class="space-y-2">
+                <input type="text" name="name" class="g-inp" id="name" th:value="*{name}" placeholder='Name' style="color: black"/>
+                <input type="email" name="email" class="g-inp" id="email" th:value="*{email}" placeholder='Email' style="color: black"/>
+                <textarea type="text" id="message" name="message" th:value="*{message}" class="g-inp h-40 resize-none"
+                          placeholder='Message...' style="color: black"></textarea>
+                <button type="submit" class='f-btn'>Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class='cr-con'>Copyright &copy; 2024 | Upright Cleaning Services</div>
+</footer>
+<script>
+    function showSuccessModal(event) {
+        event.preventDefault();
+        var form = event.target;
+
+        // Assuming the email sending process is synchronous
+        // Uncomment the next lines if you have async process
+        // and want to handle the modal showing after the response.
+
+        // form.submit();
+        // form.addEventListener('submit', function (event) {
+        //     event.preventDefault();
+        //     // Simulate an HTTP request:
+        //     setTimeout(function () {
+        //         showSuccessModal();
+        //     }, 1000);
+        // });
+
+        // Simulate a form submission delay for demo purposes
+        setTimeout(function() {
+            form.submit(); // Comment this line if you handle form submission via AJAX
+            var modal = document.getElementById("successModal");
+            var span = document.getElementsByClassName("close")[0];
+
+            modal.style.display = "block";
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }, 500);
+    }
+
+</script>
+</body>
+</html>

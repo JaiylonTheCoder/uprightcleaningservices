@@ -1,0 +1,87 @@
+/* Top Navbar styles */
+.top-navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Ensure navbar is above all content */
+    box-sizing: border-box;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    background-color: #f4f4f4;
+    height: calc(100vh - 50px);
+    position: fixed;
+    top: 50px;
+    z-index: 999;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Main Content Section styles */
+.main-content {
+    margin-left: 250px; /* Same as sidebar width */
+    padding: 20px;
+    margin-top: 70px; /* Adjust based on top navbar height */
+    margin-bottom: 20px; /* Add margin at the bottom to prevent content from getting stuck behind navbar */
+    box-sizing: border-box;
+}
+
+.content {
+    display: none; /* Hide all content sections initially */
+}
+
+.content.active {
+    display: block; /* Show the active content section */
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: calc(100% - 250px); /* Adjust width based on sidebar */
+    bottom: 0;
+    left: 250px; /* Align next to the sidebar */
+}

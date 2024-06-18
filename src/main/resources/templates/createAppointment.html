@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Cleaning Appointment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include CSS for date and time picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <style>
+        /* Custom CSS */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Book Cleaning Appointment</h1>
+    <form action="/submit-appointment" method="post">
+        <!-- Company/Client Name -->
+        <div class="form-group">
+            <label for="companyName">Company/Client Name:</label>
+            <input type="text" class="form-control" id="companyName" name="companyName" required>
+        </div>
+
+        <!-- Number of Bedrooms -->
+        <div class="form-group">
+            <label for="numRooms">Number of Bedrooms:</label>
+            <input type="number" class="form-control" id="numRooms" name="numRooms" min="1" value="1" required>
+        </div>
+
+        <!-- Service Options -->
+        <div class="form-group">
+            <label for="serviceOptions">Service Options:</label>
+            <select class="form-control" id="serviceOptions" name="serviceOptions" required>
+                <option value="basic">Basic Cleaning</option>
+                <option value="deep">Deep Cleaning</option>
+                <option value="carpet">Carpet Cleaning</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+
+        <!-- Add Another Service Button -->
+        <button type="button" class="btn btn-primary mb-3" id="addService">Add Another Service</button>
+
+        <!-- Date and Time Picker -->
+        <div class="form-group">
+            <label for="dateTimePicker">Date and Time:</label>
+            <input type="text" class="form-control" id="dateTimePicker" name="dateTimePicker" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success">Book Appointment</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Include JavaScript for date and time picker -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize date and time picker
+        $('#dateTimePicker').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            locale: {
+                format: 'MM/DD/YYYY h:mm A'
+            }
+        });
+
+        // Add Another Service Button
+        let serviceCounter = 1;
+        $('#addService').click(function() {
+            serviceCounter++;
+            const newServiceSelect = `<div class="form-group">
+                                                <label for="serviceOptions${serviceCounter}">Service Options:</label>
+                                                <select class="form-control" id="serviceOptions${serviceCounter}" name="serviceOptions${serviceCounter}" required>
+                                                    <option value="basic">Basic Cleaning</option>
+                                                    <option value="deep">Deep Cleaning</option>
+                                                    <option value="carpet">Carpet Cleaning</option>
+                                                    <!-- Add more options as needed -->
+                                                </select>
+                                            </div>`;
+            $(newServiceSelect).insertBefore(this);
+        });
+    });
+</script>
+</body>
+</html>

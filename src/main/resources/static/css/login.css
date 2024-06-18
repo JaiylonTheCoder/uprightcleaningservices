@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #2691d9; /* Set background color */
+    background-image: url('../img/anton-SnKfmC1I9fU-unsplash.jpg'); /* Add background image */
+    background-size: cover; /* Cover the entire screen */
+    background-position: center; /* Center the background image */
+    height: 100vh; /* Set full height */
+    overflow: hidden; /* Hide overflow */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;/
+}
+#loginForm{
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Add box shadow for depth */
+}
+.form-control:focus {
+    border-color: #00ff00; /* Neon green color when the field is focused */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0,255,0,0.5); /* Box shadow */
+}
+.btn-login {
+    background-color: #00ff00; /* Energy green color for the login button */
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn-login:hover {
+    background-color: #00dd00; /* Darker shade of green on hover */
+}
+/*#formHeading {*/
+/*    text-align: center;*/
+/*    margin-bottom: 20px;*/
+/*    color: #333; !* Adjust color as needed *!*/
+/*}*/
+/*.form-line {*/
+/*    height: 2px;*/
+/*    background-color: #333; !* Adjust color as needed *!*/
+/*    margin-bottom: 20px;*/
+/*}*/

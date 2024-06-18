@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="" th:href="@{/css/navbar.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" th:href="@{/img/LOGO.png}">
+    <link rel="stylesheet" href="" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/adminDashboard.css}">
+    <style>
+        *{
+        color:black
+        }
+        .modal-content {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-check-label {
+            margin-left: 1.25rem;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<nav class="top-navbar">
+    <div class="logo">Admin Dashboard</div>
+    <div class="logout"><a th:href="@{/logout}">Logout</a></div>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <!-- Sidebar content goes here -->
+    <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#" id="view-appointments-link">Appointments</a></li>
+        <li><a href="#" id="view-invoices-link">Invoices</a></li>
+        <li><a href="#" th:href="@{/blog/create}">Create blog post</a></li>
+    </ul>
+</div>
+<!-- Main Content Section -->
+<div class="main-content">
+    <div th:if="${newAppointmentsAlert}" class="alert alert-info">
+        There are new appointments!
+    </div>
+    <div class="content" id="view1">
+        <h1>User Appointments</h1>
+        <table class="display" style="width: 600px; height: 8vh; padding: 20px" id="appointmentsTable">
+            <thead>
+            <tr>
+                <th>Appointment ID</th>
+                <th>Name</th>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Appointment Date</th>
+                <th>Appointment Services</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.appointmentId}"></td>
+                <td th:text="${appointment.name}"></td>
+                <td th:text="${appointment.companyName}"></td>
+                <td th:text="${appointment.email}"></td>
+                <td th:text="${appointment.phoneNumber}"></td>
+                <td th:text="${appointment.address}"></td>
+                <td th:text="${appointment.appointmentDate}"></td>
+                <td>
+                    <ul>
+                        <li th:each="serviceType : ${appointment.serviceTypes}" th:text="${serviceType.name}"></li>
+                    </ul>
+                </td>
+                <td th:text="${appointment.status}"></td>
+                <td>
+                    <a th:href="@{'/invoice/form/' + ${appointment.appointmentId}}">Create Invoice</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="view2" class="content">
+        This is the invoice view
+    </div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+    <p>© 2024 Upright Cleaning Services. All rights reserved.</p>
+</footer>
+<!-- Invoice Modal -->
+<div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="invoiceModalLabel">Create Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm" th:action="@{/admin/createInvoice}">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="Name" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" class="form-control" id="companyName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentId">Appointment ID</label>
+                        <input type="text" class="form-control" id="appointmentId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Services</label>
+                        <div id="servicesList"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="total">Total</label>
+                        <input type="text" class="form-control" id="total" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="">Save Invoice</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--jQuery-->
+<!--<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>-->
+<!--&lt;!&ndash;Datatables&ndash;&gt;-->
+<!--<script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>-->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>-->
+<!--DataTable Configuration-->
+<script>
+$(document).ready(function () {
+        $('#appointmentsTable').DataTable();
+    });
+    </script>
+<script>
+    $(document).ready(function() {
+        $('#create-appointment-link').click(function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            $('#appointment-modal').css('display', 'block');
+        });
+
+        $('#view-appointments-link').click(function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            $('#main-section').load('/appointments');
+        });
+
+        $('#view-invoices-link').click(function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            $('#main-section').load('/invoices');
+        });
+
+        // Handle modal opening and closing
+        var modal = document.getElementById("invoiceModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const links = document.querySelectorAll('nav a');
+        const contents = document.querySelectorAll('.content');
+        const editForm = document.getElementById('editForm');
+
+        // Function to show appointments view
+        document.getElementById('view-appointments-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            hideFormAndShowContent('view1');
+        });
+
+        document.getElementById('view-invoices-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            hideFormAndShowContent('view2');
+        });
+
+        // Function to hide form and show content based on view ID
+        function hideFormAndShowContent(viewId) {
+            if (editForm) {
+                editForm.style.display = 'none';
+            }
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        // Hide form and show initial content on page load
+        hideFormAndShowContent('view1');
+    });
+</script>
+</body>
+</html>

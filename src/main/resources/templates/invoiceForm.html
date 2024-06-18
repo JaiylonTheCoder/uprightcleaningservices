@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .invoice-form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            background-color: #f9f9f9;
+        }
+        .invoice-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .invoice-form .form-group {
+            margin-bottom: 15px;
+        }
+        .invoice-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .invoice-form input[type="text"], .invoice-form input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .invoice-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .invoice-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="invoice-form">
+    <h2>Create Invoice</h2>
+    <form action="#" method="post" th:action="@{/invoice/save}">
+        <div class="form-group">
+            <label for="appointmentId">Appointment ID</label>
+            <input type="text" id="appointmentId" name="appointmentId" th:value="${appointment.appointmentId}" readonly />
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" th:value="${appointment.name}" readonly />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" th:value="${appointment.email}" readonly />
+        </div>
+        <div class="form-group">
+            <label for="appointmentDate">Appointment Date</label>
+            <input type="text" id="appointmentDate" name="appointmentDate" th:value="${appointment.appointmentDate}" readonly />
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" th:value="${appointment.address}" readonly />
+        </div>
+        <div class="form-group">
+            <label>Service Types and Prices</label>
+            <div th:each="serviceType : ${appointment.serviceTypes}">
+                <span th:text="${serviceType}"></span>
+                <input type="number" name="prices" step="0.01" min="0" placeholder="Price" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="total">Total</label>
+            <input type="text" id="total" name="total" readonly />
+        </div>
+        <button type="submit">Save Invoice</button>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const priceInputs = document.querySelectorAll('input[name="prices"]');
+        const totalInput = document.getElementById('total');
+
+        priceInputs.forEach(input => {
+            input.addEventListener('input', calculateTotal);
+        });
+
+        function calculateTotal() {
+            let total = 0;
+            priceInputs.forEach(input => {
+                const value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+            totalInput.value = total.toFixed(2);
+        }
+    });
+</script>
+</body>
+</html>

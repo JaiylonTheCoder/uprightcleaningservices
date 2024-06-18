@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+    .invoice-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      max-width: 600px;
+      width: 100%;
+    }
+    .invoice-card h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .invoice-card .detail {
+      margin-bottom: 10px;
+    }
+    .invoice-card .detail span {
+      font-weight: bold;
+    }
+    .invoice-card .services ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .invoice-card .services li {
+      margin-bottom: 5px;
+    }
+    .invoice-card button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .invoice-card button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-card">
+    <h1>Thank you for choosing us</h1>
+    <div class="detail"><span>Invoice:</span> <span th:text="'#' + ${invoice.id}"></span></div>
+    <div class="detail"><span>User Name:</span> <span th:text="${invoice.user.name}"></span></div>
+    <div class="detail"><span>Invoice Date:</span> <span th:text="${invoice.dateCreated}"></span></div>
+<!--    <div class="detail"><span>Today:</span> <span th:text="${#dates.format(T(java.time.LocalDateTime).now(), 'yyyy-MM-dd HH:mm')}"></span></div>-->
+    <div class="services">
+      <span>Services:</span>
+      <ul>
+        <li th:each="service : ${invoice.appointment.serviceTypes}" th:text="${service.toString()}"></li>
+      </ul>
+    </div>
+    <div class="detail"><span>Total Amount:</span> <span th:text="${invoice.totalAmount}"></span></div>
+    <button>Checkout</button>
+  </div>
+</body>
+</html>

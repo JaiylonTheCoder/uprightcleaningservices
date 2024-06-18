@@ -1,0 +1,13 @@
+*{
+font-family: 'Poppins', sans-serif;
+}
+.footer {
+    height: 400px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
