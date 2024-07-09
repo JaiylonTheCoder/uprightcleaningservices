@@ -23,6 +23,6 @@ public class ServiceType {
 
     @Override
     public String toString() {
-        return "ServiceType(id=" + id + ", name=" + name + ")";
+        return "Service: " + name;
     }
 }

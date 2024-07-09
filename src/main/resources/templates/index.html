@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="" th:href="@{/css/style.css}">
     <link rel="stylesheet" href="" th:href="@{/css/services.css}">
     <link rel="stylesheet" href="" th:href="@{/css/testimonials.css}">
-    <link rel="stylesheet" href="" th:href="@{/css/gallery.scss}">
+    <link rel="stylesheet" href="" th:href="@{/css/gallery.css}">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
     <link rel="icon" th:href="@{/img/LOGO.png}">
     <script src="@{js/main.js}" defer></script>
@@ -59,7 +59,7 @@
 <!--Banner Section-->
 <section class="banner-section">
     <video class="banner-video" autoplay muted loop>
-        <source th:src="@{/img/background-video}" type="video/mp4">
+        <source th:src="@{/img/background-video.mp4}" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     <div class="banner-message" style="font-weight: bold;">
@@ -119,75 +119,37 @@
         </div>
     </div>
 </div>
-<!--<div class="CSSgal">-->
-
-<!--    &lt;!&ndash; Don't wrap targets in parent &ndash;&gt;-->
-<!--    <s id="s1"></s>-->
-<!--    <s id="s2"></s>-->
-<!--    <s id="s3"></s>-->
-<!--    <s id="s4"></s>-->
-
-<!--    <div class="slider">-->
-<!--        <div style="background:#5b8;">-->
-<!--            <h2>UPRIGHT CLEANING IMAGES</h2>-->
-<!--        </div>-->
-<!--        <div style="background:#85b; background-image: url('/img/upright_img2.jpeg');">-->
-<!--            <h2>Slide 2</h2>-->
-<!--        </div>-->
-<!--        <div style="background:#e95;">-->
-<!--            <h2>Slide 3</h2>-->
-<!--        </div>-->
-<!--        <div style="background-image: url('/img/upright_img1.jpeg');">-->
-<!--            <h2>Slide 4</h2>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="prevNext">-->
-<!--        <div><a href="#s4"></a><a href="#s2"></a></div>-->
-<!--        <div><a href="#s1"></a><a href="#s3"></a></div>-->
-<!--        <div><a href="#s2"></a><a href="#s4"></a></div>-->
-<!--        <div><a href="#s3"></a><a href="#s1"></a></div>-->
-<!--    </div>-->
-
-<!--    <div class="bullets">-->
-<!--        <a href="#s1">1</a>-->
-<!--        <a href="#s2">2</a>-->
-<!--        <a href="#s3">3</a>-->
-<!--        <a href="#s4">4</a>-->
-<!--    </div>-->
-
-<!--</div>-->
-
-<section class="gallery">
+<section class="gallery mt-3">
     <div class="gallery__item">
         <input type="radio" id="img-1" checked name="gallery" class="gallery__selector"/>
-        <img class="gallery__img" src="https://picsum.photos/id/1015/600/400.jpg" alt=""/>
-        <label for="img-1" class="gallery__thumb"><img src="https://picsum.photos/id/1015/150/100.jpg" alt=""/></label>
+        <img class="gallery__img" th:src="@{/img/upright_img2.jpeg}" alt=""/>
+        <label for="img-1" class="gallery__thumb"><img th:src="@{/img/upright_img2.jpeg}" alt=""/></label>
     </div>
     <div class="gallery__item">
         <input type="radio" id="img-2" name="gallery" class="gallery__selector"/>
-        <img class="gallery__img" src="https://picsum.photos/id/1039/600/400.jpg" alt=""/>
-        <label for="img-2" class="gallery__thumb"><img src="https://picsum.photos/id/1039/150/100.jpg" alt=""/></label>
+        <img class="gallery__img" th:src="@{/img/upright_img3.jpeg}" alt=""/>
+        <label for="img-2" class="gallery__thumb"><img th:src="@{/img/upright_img3.jpeg}" alt=""/></label>
     </div>
     <div class="gallery__item">
         <input type="radio" id="img-3" name="gallery" class="gallery__selector"/>
-        <img class="gallery__img" src="https://picsum.photos/id/1057/600/400.jpg" alt=""/>
-        <label for="img-3" class="gallery__thumb"><img src="https://picsum.photos/id/1057/150/100.jpg" alt=""/></label>
+        <img class="gallery__img" th:src="@{/img/upright_img1.jpeg}" alt=""/>
+        <label for="img-3" class="gallery__thumb"><img th:src="@{/img/upright_img1.jpeg}" alt=""/></label>
     </div>
     <div class="gallery__item">
         <input type="radio" id="img-4" name="gallery" class="gallery__selector"/>
-        <img class="gallery__img" src="https://picsum.photos/id/106/600/400.jpg" alt=""/>
-        <label for="img-4" class="gallery__thumb"><img src="https://picsum.photos/id/106/150/100.jpg" alt=""/></label>
+        <img class="gallery__img" th:src="@{/img/upright_img4.jpeg}" alt=""/>
+        <label for="img-4" class="gallery__thumb"><img th:src="@{/img/upright_img4.jpeg}" alt=""/></label>
     </div>
 </section>
+
 <div class="testimonial-section" id="testimonials" style="height: 50vh">
     <figure class="snip1533">
         <figcaption>
             <blockquote>
                 <p>The cleaning service was so thorough, my place has never looked better. Truly impressed!</p>
             </blockquote>
-            <h3>Wisteria Ravenclaw</h3>
-            <h4>Google Inc.</h4>
+            <h3>Johann B</h3>
+            <h4>Instagram</h4>
         </figcaption>
     </figure>
     <figure class="snip1533">
@@ -195,7 +157,7 @@
             <blockquote>
                 <p>They turned my home into a sparkling haven. I can now relax and enjoy a clean, fresh environment.</p>
             </blockquote>
-            <h3>Ursula Gurnmeister</h3>
+            <h3>Mark B</h3>
             <h4>Facebook</h4>
         </figcaption>
     </figure>
@@ -204,7 +166,7 @@
             <blockquote>
                 <p>The team was efficient, friendly, and left my office spotless. Highly recommend their services!</p>
             </blockquote>
-            <h3>Ingredia Nutrisha</h3>
+            <h3>Kelsey I</h3>
             <h4>Twitter</h4>
         </figcaption>
     </figure>

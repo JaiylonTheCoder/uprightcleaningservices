@@ -58,7 +58,7 @@ public class AppointmentController {
             Long userId = user.getId();
             appointmentService.save(appointmentForm, userId);
 
-            return "redirect:/success"; // Redirect to a success page
+            return "redirect:/appointmentSuccess"; // Redirect to a success page
         }
 
         if (!unnotifiedAppointments.isEmpty()) {

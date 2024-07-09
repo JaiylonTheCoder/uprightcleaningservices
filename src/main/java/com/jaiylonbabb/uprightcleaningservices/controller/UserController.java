@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("user")
@@ -47,15 +48,28 @@ public class UserController {
         }
 
         // Assign the default role "USER"
-        Role defaultRole = roleRepository.findByName("ROLE_USER");
-        System.out.println("Default Role " + defaultRole);//made change here
-        user.setRoles(Collections.singletonList(defaultRole));
+        userService.assignDefaultRole(user);
 
         userService.registerClient(user);
         redirectAttributes.addFlashAttribute("successMessage", "Registration successful! Please log in with your credentials.");
         return "redirect:/login";
     }
 
+    @GetMapping("/user")
+    public @ResponseBody String getUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return "User: " + userDetails.getUsername() + ", Roles: " + userDetails.getAuthorities();
+    }
+//    @GetMapping("/user")
+//    public @ResponseBody String getUserDetails() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+//        String roles = userDetails.getAuthorities().stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.joining(", "));
+//        return "User: " + userDetails.getUsername() + ", Roles: " + roles;
+//    }
 
     @GetMapping("/profile")
     public String showProfile(Model model, Authentication authentication) {

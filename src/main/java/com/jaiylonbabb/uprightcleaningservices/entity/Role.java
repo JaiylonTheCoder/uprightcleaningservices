@@ -10,11 +10,10 @@ import java.util.Set;
 @Entity
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "role_id", nullable = false)
     private Long id;
 
-    public String name;
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> user = new HashSet<>();
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
 }

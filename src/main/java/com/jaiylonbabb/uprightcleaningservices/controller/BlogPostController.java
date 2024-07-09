@@ -6,7 +6,9 @@ import com.jaiylonbabb.uprightcleaningservices.repository.UserRepository;
 import com.jaiylonbabb.uprightcleaningservices.service.BlogPostService;
 import com.jaiylonbabb.uprightcleaningservices.service.EmailService;
 import com.jaiylonbabb.uprightcleaningservices.service.UserService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,9 @@ import java.util.stream.Collectors;
 public class BlogPostController {
     @Autowired
     private BlogPostService blogPostService;
+
+    @Value("${upload.dir}")
+    private String uploadDir;
 
     @Autowired
     private UserService userService;
@@ -40,16 +46,24 @@ public class BlogPostController {
         return "createBlog";
     }
 
+    @PostConstruct
+    public void init() {
+        File uploadDirectory = new File(uploadDir);
+        if (!uploadDirectory.exists()) {
+            uploadDirectory.mkdirs();
+        }
+    }
+
     @PostMapping("/save")
     public String createBlogPost(@ModelAttribute BlogPost blogPost, @RequestParam("imageFile") MultipartFile imageFile) {
         System.out.println("Inside createBlogPost");
         // Handle file upload
         if (!imageFile.isEmpty()) {
             try {
-                String imagePath = "src/main/resources/static/uploads" + imageFile.getOriginalFilename();
+                String imagePath = Paths.get(uploadDir, imageFile.getOriginalFilename()).toString();
                 File dest = new File(imagePath);
                 imageFile.transferTo(dest);
-                blogPost.setImageUrl(imagePath);
+                blogPost.setImageUrl("/uploads/" + imageFile.getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();
             }

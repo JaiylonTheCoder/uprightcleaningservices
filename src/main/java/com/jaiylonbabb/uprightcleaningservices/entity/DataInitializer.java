@@ -9,10 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer {
-    @Autowired
-    private RoleRepository roleRepository;
-
+    private final RoleRepository roleRepository;
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
+
+    @Autowired
+    public DataInitializer(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @PostConstruct
     public void init() {
@@ -27,6 +30,7 @@ public class DataInitializer {
             role = new Role();
             role.setName(roleName);
             roleRepository.save(role);
+            logger.info("Role {} created successfully", roleName);
         } else {
             logger.info("Role {} already exists", roleName);
         }

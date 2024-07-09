@@ -1,8 +1,11 @@
 package com.jaiylonbabb.uprightcleaningservices.controller;
 
 import com.jaiylonbabb.uprightcleaningservices.entity.Appointment;
+import com.jaiylonbabb.uprightcleaningservices.entity.Invoice;
 import com.jaiylonbabb.uprightcleaningservices.repository.AppointmentRepository;
+import com.jaiylonbabb.uprightcleaningservices.repository.InvoiceRepository;
 import com.jaiylonbabb.uprightcleaningservices.service.AppointmentService;
+import com.jaiylonbabb.uprightcleaningservices.service.InvoiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,10 @@ public class AdminController {
     @Autowired
     private AppointmentRepository appointmentRepository;
     @Autowired
+    private InvoiceService invoiceService;
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+    @Autowired
     public AdminController(AppointmentService appointmentService, AppointmentRepository appointmentRepository) {
         this.appointmentService = appointmentService;
         this.appointmentRepository = appointmentRepository;
@@ -33,9 +40,8 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String adminAppointments(Model model) {
         List<Appointment> appointments = appointmentRepository.findAll();
-        // Logging appointments
-        Logger logger = LoggerFactory.getLogger(getClass());
-        logger.info("Appointments: {}", appointments);
+        List<Invoice> invoices = invoiceRepository.findAll();
+        model.addAttribute("invoices", invoices);
         model.addAttribute("appointments", appointments);
         return "adminDashboard";
     }

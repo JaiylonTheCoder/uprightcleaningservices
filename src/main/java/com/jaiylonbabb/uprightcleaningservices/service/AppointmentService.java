@@ -33,9 +33,6 @@ public class AppointmentService {
         this.userRepository = userRepository;
     }
 
-//    public List<Appointment> getAllAppointments() {
-//        return appointmentRepository.findAll();
-//    }
 
     public List<Appointment> getAppointmentsForCurrentUser(User currentUser) {
         // Get the current authenticated user
@@ -67,7 +64,7 @@ public class AppointmentService {
                 .map(serviceTypeRepository::findByName)
                 .collect(Collectors.toSet());
         appointment.setServiceTypes(serviceTypes);
-
+        appointment.setAdditionalServices(appointmentForm.getAdditionalServices());
         appointment.setAppointmentDate(appointmentForm.getAppointmentDate());
         appointment.setStatus(appointmentForm.getStatus());
         appointment.setCompletionDate(appointmentForm.getCompletionDate());
