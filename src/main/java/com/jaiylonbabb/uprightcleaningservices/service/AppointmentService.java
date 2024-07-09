@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class AppointmentService {
-//    comment
     @Autowired
     private AppointmentRepository appointmentRepository;
     @Autowired
