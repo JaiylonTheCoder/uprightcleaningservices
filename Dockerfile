@@ -1,4 +1,13 @@
 FROM eclipse-temurin:21-jdk AS build
+# Install Maven
+RUN apt-get update && \
+    apt-get install -y maven
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the pom.xml to the container
+COPY pom.xml .
 COPY . .
 RUN mvn clean package -DskipTests
 
