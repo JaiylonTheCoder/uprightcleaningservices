@@ -1,17 +1,23 @@
+# Use the Eclipse Temurin 21 JDK image for building the application
 FROM eclipse-temurin:21-jdk AS build
-# Install Maven
-RUN apt-get update && \
-    apt-get install -y maven
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the pom.xml to the container
-COPY pom.xml .
+# Copy the application source code to the container
 COPY . .
-RUN mvn clean package -DskipTests
 
+# Run Maven to clean and package the application, skipping tests
+RUN ./mvnw clean package -DskipTests
+
+# Use the OpenJDK 21 JDK slim image for running the application
 FROM openjdk:21-jdk-slim
-COPY --from=build /targer/uprightcleaningservices-0.0.1-SNAPSHOT.jar uprightcleaningservices.jar
+
+# Copy the packaged JAR file from the build stage to the runtime stage
+COPY --from=build /app/target/uprightcleaningservices-0.0.1-SNAPSHOT.jar uprightcleaningservices.jar
+
+# Expose port 8080 for the application
 EXPOSE 8080
+
+# Set the entry point to run the JAR file
 ENTRYPOINT ["java", "-jar", "uprightcleaningservices.jar"]
