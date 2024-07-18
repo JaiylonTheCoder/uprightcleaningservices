@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/itemForm.css}">
+    <title>Add item to inventory</title>
+</head>
+<body>
+<div class="container">
+    <h1>Add New Item</h1>
+    <form id="itemForm" th:action="@{/admin/items/add}" method="post">
+        <div class="form-group">
+            <label for="name">Item Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" required>
+        </div>
+        <div class="form-group">
+            <label for="supplier">Supplier</label>
+            <input type="text" id="supplier" name="supplier">
+        </div>
+        <div class="form-group">
+            <label for="reorderLevel">Reorder Level</label>
+            <input type="number" id="reorderLevel" name="reorderLevel" >
+        </div>
+        <button type="submit">Add Item</button>
+    </form>
+</div>
+</body>
+</html>

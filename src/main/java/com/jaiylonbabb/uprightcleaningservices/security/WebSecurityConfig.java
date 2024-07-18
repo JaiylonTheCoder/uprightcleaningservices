@@ -70,7 +70,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/profile").authenticated()
                 .requestMatchers("/create").authenticated()
-                .requestMatchers("admin/**").hasAuthority("ADMIN")
+                .requestMatchers("admin/**").hasRole("ADMIN")
                 .requestMatchers(
                         "/login",
                         "/resources/**",

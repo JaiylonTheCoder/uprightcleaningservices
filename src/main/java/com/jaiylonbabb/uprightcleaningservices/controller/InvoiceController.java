@@ -58,7 +58,7 @@ public class InvoiceController {
             Appointment appointment = appointmentOpt.get();
 
             // Update appointment status
-            appointment.setStatus("complete");
+            appointment.setStatus("Invoice Sent");
             appointmentRepository.save(appointment);
             System.out.println("Appointment saved to database");
             // Calculate total amount

@@ -6,12 +6,17 @@
     <link rel="stylesheet" th:href="@{/css/userProfile.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://kit.fontawesome.com/bb2fae4648.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="" th:href="@{/css/userProfile.css}">
+    <link rel="stylesheet" th:href="@{/css/cancelModal.css}">
     <link rel="icon" th:href="@{/img/LOGO.png}">
     <script>
         function addAdditionalServiceField() {
@@ -29,7 +34,7 @@
             button.className = 'btn btn-danger';
             button.type = 'button';
             button.textContent = 'Remove';
-            button.onclick = function() {
+            button.onclick = function () {
                 container.removeChild(div);
             };
 
@@ -43,33 +48,66 @@
             max-width: 600px;
             margin: auto;
         }
+
         .form-check-label {
             margin-left: 1.25rem;
         }
+
         .content {
             display: none;
         }
+
         .content.active {
             display: block;
         }
+
         .appointments-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
         }
+
         .appointment-card {
-            background: rgb(63,94,251);
-            background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
             border: 1px solid #ccc;
-            padding: 20px;
             border-radius: 8px;
-            width: calc(33.333% - 20px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            color: white;
+            padding: 16px;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .appointment-card h3 {
-            margin-top: 0;
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .card-details {
+            margin-top: 16px;
+        }
+
+        .card-details p {
+            margin: 4px 0;
+        }
+
+        .fas {
+            margin-right: 8px;
+        }
+
     </style>
 
 </head>
@@ -82,8 +120,11 @@
         <nav>
             <ul>
                 <li><a th:href="@{/index}"><i class="fa-solid fa-house-user"></i> HOME</a></li>
-                <li><button id="create-appointment-btn"><i class="fa-solid fa-plus"></i> CREATE APPOINTMENT</button></li>
-                <li><a href="#" id="view-appointments-link"><i class="fa-regular fa-calendar-check"></i> APPOINTMENTS</a></li>
+                <li>
+                    <button id="create-appointment-btn"><i class="fa-solid fa-plus"></i> CREATE APPOINTMENT</button>
+                </li>
+                <li><a href="#" id="view-appointments-link"><i class="fa-regular fa-calendar-check"></i>
+                    APPOINTMENTS</a></li>
                 <li><a href="#" id="view-invoices-link"><i class="fa-solid fa-receipt"></i> INVOICES</a></li>
                 <li><a href="#" id="edit-profile-link"><i class="fa-solid fa-user-pen"></i> EDIT PROFILE</a></li>
                 <li><a th:href="@{/logout}" id="logout-btn"><i class="fa-solid fa-power-off"></i> LOGOUT</a></li>
@@ -116,36 +157,65 @@
         </form>
 
         <div id="view1" class="content">
-             <h1>Appointments</h1>
+            <!--             <h1>Appointments</h1>-->
             <div class="appointments-container">
                 <div class="appointment-card" th:each="appointment : ${appointments}">
-                    <h3 th:text="${appointment.name}"></h3>
-                    <p><strong>Email:</strong> <span th:text="${appointment.email}"></span></p>
-                    <p><strong>Phone Number:</strong> <span th:text="${appointment.phoneNumber}"></span></p>
-                    <p><strong>Address:</strong> <span th:text="${appointment.address}"></span></p>
-                    <p><strong>Appointment Date:</strong> <span th:text="${appointment.appointmentDate}"></span></p>
-                    <p><strong>Status:</strong> <span th:text="${appointment.status}"></span></p>
+                    <div class="card-header">
+                        <h3 th:text="${appointment.name}"></h3>
+                        <span class="status" th:text="${appointment.status}"></span>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="fas fa-calendar-alt"></i> <span th:text="${appointment.appointmentDate}"></span></p>
+                        <p><i class="fas fa-map-marker-alt"></i> <span th:text="${appointment.address}"></span></p>
+                        <p><i class="fas fa-phone"></i> <span th:text="${appointment.phoneNumber}"></span></p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-info" onclick="toggleDetails(this)">More Info</button>
+<!--                        <button class="btn btn-danger" th:onclick="'confirmCancel(' + ${appointment.appointmentId} + ')'">Cancel Appointment</button>-->
+                        <form th:action="@{/cancelAppointment}" method="post" id="cancelForm_${appointment.appointmentId}">
+                            <input type="hidden" name="appointmentId" th:value="${appointment.appointmentId}"/>
+                            <input type="hidden" name="userId" th:value="${userId}"/>
+                            <button type="button" class="btn btn-danger" th:onclick="'confirmCancel(' + ${appointment.appointmentId} + ')'">Cancel Appointment</button>
+                        </form>
+                    </div>
+                    <div class="card-details" style="display:none;">
+                        <p><strong>Email:</strong> <span th:text="${appointment.email}"></span></p>
+                        <form th:action="@{/rescheduleAppointment}" method="post">
+                            <input type="hidden" name="appointmentId" th:value="${appointment.appointmentId}" />
+                            <input type="date" name="newDate" required />
+                            <button type="submit">Reschedule</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+
         </div>
+        <!--        hidden form-->
+        <!--        <form id="cancelForm" th:action="@{/cancelAppointment}" method="post" style="display: none;">-->
+        <!--            <input type="hidden" id="cancelFormAppointmentId" name="appointmentId">-->
+        <!--            <input type="hidden" id="cancelFormUserId" name="userId" th:value="${userId}">-->
+        <!--        </form>-->
+
         <div id="view2" class="content">
             <h1>Your Invoices</h1>
             <div class="invoices-container">
                 <div class="invoice-card" th:each="invoice : ${invoices}">
-                    <h3>Invoice ID: <a th:href="@{/invoice/view/{id}(id=${invoice.id})}" th:text="${invoice.id}"></a></h3>
+                    <h3>Invoice Number: <a th:href="@{/invoice/view/{id}(id=${invoice.id})}" th:text="${invoice.id}"></a></h3>
                     <p><strong>User Name:</strong> <span th:text="${invoice.appointment.name}"></span></p>
                     <p><strong>Services:</strong></p>
                     <ul>
-                        <li th:each="service : ${invoice.appointment.serviceTypes}" th:text="${service.toString()}"></li>
+                        <li th:each="service : ${invoice.appointment.serviceTypes}" th:text="${service}"></li>
                     </ul>
                     <p><strong>Total Amount:</strong> <span th:text="${invoice.totalAmount}"></span></p>
                     <p><strong>Invoice Date:</strong> <span th:text="${invoice.dateCreated}"></span></p>
-                </div>
+                    <a class="btn btn-primary" th:href="@{/pay/checkout}">Pay</a>
+                </div>>
             </div>
         </div>
         <div id="view3" class="content">This is the content for View 3</div>
     </main>
 </div>
+
 <!-- Modal for appointment creation -->
 <div id="appointment-modal" class="modal">
     <div class="modal-content">
@@ -166,11 +236,11 @@
             </div>
             <div class="form-group">
                 <label for="companyName">Company</label>
-                <input type="text" class="form-control" id="companyName" name="companyName" th:value="${companyName}" >
+                <input type="text" class="form-control" id="companyName" name="companyName" th:value="${companyName}">
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${phoneNumber}" >
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${phoneNumber}">
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
@@ -179,7 +249,8 @@
             <div class="form-group">
                 <label for="serviceTypes">Service Types</label>
                 <select id="serviceTypes" name="serviceTypes" class="form-control" multiple>
-                    <option th:each="serviceType : ${serviceTypes}" th:value="${serviceType.name}" th:text="${serviceType.name}"></option>
+                    <option th:each="serviceType : ${serviceTypes}" th:value="${serviceType.name}"
+                            th:text="${serviceType.name}"></option>
                 </select>
             </div>
             <div class="form-group">
@@ -189,21 +260,35 @@
             <div class="form-group">
                 <label>Additional Services</label>
                 <div id="additionalServicesContainer"></div>
-                <button type="button" class="btn btn-primary" onclick="addAdditionalServiceField()">Add Additional Service</button>
+                <button type="button" class="btn btn-primary" onclick="addAdditionalServiceField()">Add Additional
+                    Service
+                </button>
             </div>
             <input type="hidden" id="userId" name="userId" th:value="${userId}">
             <button type="submit" class="btn btn-success">Create Appointment</button>
         </form>
     </div>
 </div>
+
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Are you sure you want to cancel this appointment?</p>
+        <button id="confirmCancel">Yes, Cancel</button>
+        <button id="closeModal">No, Go Back</button>
+    </div>
+</div>
 <script th:src="@{/js/script.js}"></script>
 <!-- Include DataTables JS -->
 <!--jQuery-->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <!--Datatables-->
 <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
 <script th:inline="javascript">
     $(document).ready(function () {
@@ -253,20 +338,29 @@
         hideFormAndShowContent('view1');
     });
 </script>
-
 <script>
-    $(document).ready(function() {
-        $('#create-appointment-link').click(function(event) {
+    function confirmCancel(appointmentId) {
+        if (confirm("Are you sure you want to cancel this appointment?")) {
+            // Submit the form
+            document.getElementById('cancelForm_' + appointmentId).submit();
+        } else {
+            // User clicked cancel on the confirmation prompt, do nothing (optional: display a message)
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#create-appointment-link').click(function (event) {
             event.preventDefault(); // Prevent the default link behavior
             $('#appointment-modal').css('display', 'block');
         });
 
-        $('#view-appointments-link').click(function(event) {
+        $('#view-appointments-link').click(function (event) {
             event.preventDefault(); // Prevent the default link behavior
             $('#main-section').load('/appointments');
         });
 
-        $('#view-invoices-link').click(function(event) {
+        $('#view-invoices-link').click(function (event) {
             event.preventDefault(); // Prevent the default link behavior
             $('#main-section').load('/invoices');
         });
@@ -275,11 +369,11 @@
         var modal = document.getElementById("appointment-modal");
         var span = document.getElementsByClassName("close")[0];
 
-        span.onclick = function() {
+        span.onclick = function () {
             modal.style.display = "none";
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
@@ -301,7 +395,7 @@
         button.className = 'btn btn-danger';
         button.type = 'button';
         button.textContent = 'Remove';
-        button.onclick = function() {
+        button.onclick = function () {
             container.removeChild(div);
         };
 
@@ -309,6 +403,84 @@
         div.appendChild(button);
         container.appendChild(div);
     }
+
+    //
+    // function cancelValidation(){
+    //     return alert("Are you sure you want to cancel this appointment?");
+    // }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById("confirmationModal");
+        var span = document.getElementsByClassName("close")[0];
+        var confirmButton = document.getElementById("confirmCancel");
+        var closeButton = document.getElementById("closeModal");
+
+        document.querySelectorAll('.cancel-button').forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                var appointmentId = event.target.getAttribute('data-appointment-id');
+                modal.style.display = "block";
+
+                // Add appointment id to confirm button for later use
+                confirmButton.setAttribute('data-appointment-id', appointmentId);
+            });
+        });
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks on close button, close the modal
+        closeButton.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the confirm button, submit the form
+        confirmButton.onclick = function () {
+            var appointmentId = confirmButton.getAttribute('data-appointment-id');
+            var form = document.querySelector('.cancel-form input[value="' + appointmentId + '"]').closest('form');
+            form.submit();
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const appointmentDateInput = document.getElementById('appointmentDate');
+        const availabilityFeedback = document.getElementById('availabilityFeedback');
+
+        appointmentDateInput.addEventListener('change', function () {
+            const selectedDateTime = appointmentDateInput.value;
+            checkDateTimeAvailability(selectedDateTime);
+        });
+
+        function checkDateTimeAvailability(dateTime) {
+            fetch(`/appointments/checkDateTimeAvailability?dateTime=${dateTime}`)
+                .then(response => response.json())
+                .then(isAvailable => {
+                    if (!isAvailable) {
+                        availabilityFeedback.textContent = "This date and time is not available. Please choose another.";
+                        appointmentDateInput.value = "";
+                    } else {
+                        availabilityFeedback.textContent = "";
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        function confirmCancel(appointmentId) {
+            if (confirm("Are you sure you want to cancel this appointment?")) {
+                document.getElementById('cancelForm_' + appointmentId).submit();
+            }
+        }
+    });
+</script>
+
 </body>
 </html>

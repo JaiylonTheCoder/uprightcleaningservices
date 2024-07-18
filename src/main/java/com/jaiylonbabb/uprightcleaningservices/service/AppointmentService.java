@@ -5,9 +5,12 @@ import com.jaiylonbabb.uprightcleaningservices.repository.AppointmentRepository;
 import com.jaiylonbabb.uprightcleaningservices.repository.ServiceTypeRepository;
 import com.jaiylonbabb.uprightcleaningservices.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -97,5 +100,27 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
+    public void rescheduleAppointment(Long appointmentId, String newDate) {
+        Optional<Appointment> optionalAppointment = appointmentRepository.findById(appointmentId);
+        if (optionalAppointment.isPresent()) {
+            Appointment appointment = optionalAppointment.get();
+            appointment.setAppointmentDate(newDate);
+            appointmentRepository.save(appointment);
+
+            // Add logic to notify the user and admin about the rescheduling if needed
+        }
+    }
+
+    public boolean cancelAppointment(Long appointmentId, Long userId) {
+        Optional<Appointment> optionalAppointment = appointmentRepository.findById(appointmentId);
+        if (optionalAppointment.isPresent()) {
+            Appointment appointment = optionalAppointment.get();
+            if (appointment.getUser().getId().equals(userId)) {
+                appointmentRepository.delete(appointment);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

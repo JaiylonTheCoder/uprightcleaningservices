@@ -20,6 +20,7 @@ import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,30 +31,31 @@ public class CustomUserDetailsService implements UserDetailsService {
    private UserRepository userRepository;
 
 //    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        logger.debug("Attempting to load user by email: {}", username);
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 //
-//        User user = userRepository.findByEmail(username);
+//        User user = userRepository.findByEmail(email);
 //        if (user == null) {
-//            logger.error("User not found with email: {}", username);
-//            throw new UsernameNotFoundException("User not found with email: " + username);
+//            throw new UsernameNotFoundException("Could not find user");
 //        }
 //
-//        logger.debug("User found: {}", user);
-//        return new CustomUserDetails(user);
+//        return new org.springframework.security.core.userdetails.User(
+//                user.getEmail(), user.getPassword(), user.getAuthorities());
 //    }
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("Could not find user");
-        }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+
+        Set<SimpleGrantedAuthority> grantedAuthorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toSet());
+
+        System.out.println("User roles: " + grantedAuthorities); // Add logging
 
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), user.getPassword(), user.getAuthorities());
-//        return new CustomUserDetails(user);
+                user.getUsername(), user.getPassword(), grantedAuthorities);
     }
+
 
     public void printLoggedInUserDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

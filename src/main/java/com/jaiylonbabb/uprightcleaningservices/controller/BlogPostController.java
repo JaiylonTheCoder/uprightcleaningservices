@@ -75,7 +75,7 @@ public class BlogPostController {
         List<User> users = userRepository.findAll();
         List<String> userEmails = users.stream().map(User::getEmail).collect(Collectors.toList());
         String subject = "New Blog Post: " + createdPost.getTitle();
-        String body = "Hello,\n\nA new blog post has been created:\n\nTitle: " + createdPost.getTitle() + "\n\n" + createdPost.getBody() + "\n\nBest Regards,\nYour Company";
+        String body = "Hello,\n\nA new blog post has been created:\n\nTitle: " + createdPost.getTitle() + "\n\n" + createdPost.getBody() + "\n\nBest Regards,\nUpright Cleaning Services";
         emailService.sendBlogPostNotification(userEmails, subject, body);
 
         return "redirect:/index";

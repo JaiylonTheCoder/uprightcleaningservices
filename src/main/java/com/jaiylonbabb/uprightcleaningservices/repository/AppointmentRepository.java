@@ -12,4 +12,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findByUserId(Long userId);
     List<Appointment> findByUser(User user);
     List<Appointment> findByNotifiedFalse();
+    List<Appointment> findByAppointmentDate(String appointmentDate);
 }

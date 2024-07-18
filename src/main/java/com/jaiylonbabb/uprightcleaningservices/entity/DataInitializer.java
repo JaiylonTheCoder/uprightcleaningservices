@@ -5,34 +5,26 @@ import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DataInitializer {
-    private final RoleRepository roleRepository;
-    private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
-
+public class DataInitializer implements CommandLineRunner {
     @Autowired
-    public DataInitializer(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
+    private RoleRepository roleRepository;
 
-    @PostConstruct
-    public void init() {
-        createRoleIfNotFound("USER");
-        createRoleIfNotFound("ADMIN");
-    }
+    @Override
+    public void run(String... args) throws Exception {
+        if (roleRepository.findByName(RoleName.ROLE_USER) == null) {
+            Role userRole = new Role();
+            userRole.setName(RoleName.ROLE_USER);
+            roleRepository.save(userRole);
+        }
 
-    private void createRoleIfNotFound(String roleName) {
-        Role role = roleRepository.findByName(roleName);
-        if (role == null) {
-            logger.info("Creating role: {}", roleName);
-            role = new Role();
-            role.setName(roleName);
-            roleRepository.save(role);
-            logger.info("Role {} created successfully", roleName);
-        } else {
-            logger.info("Role {} already exists", roleName);
+        if (roleRepository.findByName(RoleName.ROLE_ADMIN) == null) {
+            Role adminRole = new Role();
+            adminRole.setName(RoleName.ROLE_ADMIN);
+            roleRepository.save(adminRole);
         }
     }
 }

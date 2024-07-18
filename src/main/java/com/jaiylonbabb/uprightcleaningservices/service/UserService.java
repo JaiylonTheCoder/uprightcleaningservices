@@ -1,6 +1,7 @@
 package com.jaiylonbabb.uprightcleaningservices.service;
 
 import com.jaiylonbabb.uprightcleaningservices.entity.Role;
+import com.jaiylonbabb.uprightcleaningservices.entity.RoleName;
 import com.jaiylonbabb.uprightcleaningservices.entity.User;
 import com.jaiylonbabb.uprightcleaningservices.repository.RoleRepository;
 import com.jaiylonbabb.uprightcleaningservices.repository.UserRepository;
@@ -30,11 +31,12 @@ public class UserService {
         user.setEmail(user.getEmail());
         user.setAddress(user.getAddress());
         user.setPhone(user.getPhone());
+        assignDefaultRole(user);
         UserRepository.save(user);
     }
 
     public void assignDefaultRole(User user) {
-        Role userRole = roleRepository.findByName("USER");
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER);
         if (userRole != null) {
             user.getRoles().add(userRole);
         } else {
