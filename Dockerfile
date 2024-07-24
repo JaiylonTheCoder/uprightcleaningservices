@@ -1,11 +1,17 @@
+
 # Use the Eclipse Temurin 21 JDK image for building the application
 FROM eclipse-temurin:21-jdk AS build
 
 # Set the working directory inside the container
 WORKDIR /app
 
+# Copy the Maven wrapper script and set executable permissions
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN chmod +x mvnw
+
 # Copy the application source code to the container
-COPY . .
+COPY src ./src
 
 # Run Maven to clean and package the application, skipping tests
 RUN ./mvnw clean package -DskipTests
