@@ -208,7 +208,7 @@
                     </ul>
                     <p><strong>Total Amount:</strong> <span th:text="${invoice.totalAmount}"></span></p>
                     <p><strong>Invoice Date:</strong> <span th:text="${invoice.dateCreated}"></span></p>
-                    <a class="btn btn-primary" th:href="@{/pay/checkout}">Pay</a>
+                    <a class="btn btn-primary" th:href="@{/pay/checkout/{id}(id=${invoice.id})}">Pay</a>
                 </div>>
             </div>
         </div>

@@ -16,6 +16,20 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
     <link rel="icon" th:href="@{/img/LOGO.png}">
     <script src="@{js/main.js}" defer></script>
+    <style>
+        .logout-button {
+            color: #f2f5f7;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .logout-button:hover {
+            color: #61DAFB;
+        }
+    </style>
 <!--    <script>-->
 <!--        document.addEventListener('DOMContentLoaded', () => {-->
 <!--    gsap.to('.banner-section', { duration: 2, opacity: 1, ease: 'power2.inOut' });-->
@@ -46,6 +60,11 @@
         <!-- Display username if logged in -->
         <li th:if="${#authorization.expression('isAuthenticated()')}">
             <a th:href="@{/user/profile}"><span><span th:text="${#authentication.name}"></span></span></a>
+            <a href="#" th:href="@{/logout}" class="logout-button">Logout</a>
+        </li>
+        <!-- Display admin dashboard link if user has admin role -->
+        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <a th:href="@{/admin/dashboard}">Admin Dashboard</a>
         </li>
     </ul>
 </nav>

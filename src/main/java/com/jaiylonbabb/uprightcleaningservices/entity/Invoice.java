@@ -25,6 +25,8 @@ public class Invoice {
     private Appointment appointment;
     private LocalDateTime dateCreated;
 
+    private String invoiceStatus;
+
 //    @CollectionTable(name = "appointment_services", joinColumns = @JoinColumn(name = "appointment_id"))
 //    @ElementCollection
 //    @Column(name = "service_type")

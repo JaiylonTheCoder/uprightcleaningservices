@@ -22,4 +22,8 @@ public class InvoiceService {
     public List<Invoice> getInvoicesForCurrentUser(User currentUser) {
         return invoiceRepository.findByUser(currentUser);
     }
+
+    public Invoice findById(Long id) {
+        return invoiceRepository.findById(id).orElseThrow(() -> new RuntimeException("Invoice not found"));
+    }
 }
