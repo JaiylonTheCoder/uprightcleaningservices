@@ -100,27 +100,76 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
+//    public void rescheduleAppointment(Long appointmentId, String newDate) {
+//        Optional<Appointment> optionalAppointment = appointmentRepository.findById(appointmentId);
+//        if (optionalAppointment.isPresent()) {
+//            Appointment appointment = optionalAppointment.get();
+//            appointment.setAppointmentDate(newDate);
+//            appointmentRepository.save(appointment);
+//
+//
+//        }
+//    }
     public void rescheduleAppointment(Long appointmentId, String newDate) {
         Optional<Appointment> optionalAppointment = appointmentRepository.findById(appointmentId);
         if (optionalAppointment.isPresent()) {
             Appointment appointment = optionalAppointment.get();
+            String oldDate = appointment.getAppointmentDate();
             appointment.setAppointmentDate(newDate);
             appointmentRepository.save(appointment);
 
-            // Add logic to notify the user and admin about the rescheduling if needed
+            // Notify the user
+            String userSubject = "Your Appointment Rescheduled";
+            String userBody = "Dear " + appointment.getName() + ",\n\nYour appointment has been rescheduled from "
+                    + oldDate + " to " + newDate + ".\n\nRegards,\nUpright Cleaning Services";
+            emailService.sendAppointmentConfirmation(appointment.getEmail(), userSubject, userBody);
+
+            // Notify the admin
+            String adminSubject = "Appointment Rescheduled Notification";
+            String adminBody = "The appointment with ID " + appointmentId + " for " + appointment.getName() + " has been rescheduled from "
+                    + oldDate + " to " + newDate + ".";
+            emailService.sendAppointmentNotification("jaiylonbabb21@gmail.com", adminSubject, adminBody);
+        } else {
+            throw new RuntimeException("Appointment not found");
         }
     }
 
-    public boolean cancelAppointment(Long appointmentId, Long userId) {
-        Optional<Appointment> optionalAppointment = appointmentRepository.findById(appointmentId);
-        if (optionalAppointment.isPresent()) {
-            Appointment appointment = optionalAppointment.get();
-            if (appointment.getUser().getId().equals(userId)) {
-                appointmentRepository.delete(appointment);
-                return true;
-            }
-        }
-        return false;
+//    public boolean cancelAppointment(Long appointmentId, Long userId) {
+//        Optional<Appointment> optionalAppointment = appointmentRepository.findById(appointmentId);
+//        if (optionalAppointment.isPresent()) {
+//            Appointment appointment = optionalAppointment.get();
+//            if (appointment.getUser().getId().equals(userId)) {
+//                appointmentRepository.delete(appointment);
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+    public boolean isDateAvailable(String newDate) {
+        // Logic to check if the date is available
+        List<Appointment> appointments = appointmentRepository.findByAppointmentDate(newDate);
+        return appointments.isEmpty();
+    }
+    public void cancelAppointment(Long appointmentId) {
+        // Fetch the appointment
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(() -> new IllegalArgumentException("Invalid appointment ID"));
+
+        // Set appointment status to canceled (assuming you have a status field)
+        appointment.setStatus("Canceled");
+        appointmentRepository.save(appointment);
+
+        // Fetch user details
+        User user = userService.findById(appointment.getUser().getId());
+
+        // Send cancellation emails
+        String userSubject = "Your Appointment Cancellation";
+        String userBody = "Dear " + user.getName() + ",\n\nYour appointment on " + appointment.getAppointmentDate() + " has been canceled.\n\nRegards,\nUpright Cleaning Services";
+        emailService.sendAppointmentConfirmation(user.getEmail(), userSubject, userBody);
+
+        String adminSubject = "Appointment Cancellation Notification";
+        String adminBody = "The appointment for " + user.getName() + " on " + appointment.getAppointmentDate() + " has been canceled.";
+        emailService.sendAppointmentNotification("jaiylonbabb21@gmail.com", adminSubject, adminBody); // Replace with admin email
     }
 
 }

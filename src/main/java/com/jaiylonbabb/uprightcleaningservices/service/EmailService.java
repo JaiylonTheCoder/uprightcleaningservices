@@ -41,4 +41,21 @@ public class EmailService {
             sendAppointmentConfirmation(toEmail, subject, body);
         }
     }
+
+    public void sendRescheduleConfirmation(String toEmail, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject(subject);
+        message.setText(body);
+        message.setFrom(fromEmail);
+
+        mailSender.send(message);
+    }
+
+    public void sendRescheduleNotificationToAdmin(String adminEmail, String userName, Long appointmentId, String newDate) {
+        String subject = "Appointment Rescheduled";
+        String body = String.format("The appointment with ID %d has been rescheduled by %s to %s.", appointmentId, userName, newDate);
+
+        sendRescheduleConfirmation(adminEmail, subject, body);
+    }
 }

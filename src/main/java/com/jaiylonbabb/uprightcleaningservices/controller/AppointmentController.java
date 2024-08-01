@@ -7,6 +7,7 @@ import com.jaiylonbabb.uprightcleaningservices.entity.User;
 import com.jaiylonbabb.uprightcleaningservices.repository.AppointmentRepository;
 import com.jaiylonbabb.uprightcleaningservices.repository.UserRepository;
 import com.jaiylonbabb.uprightcleaningservices.service.AppointmentService;
+import com.jaiylonbabb.uprightcleaningservices.service.EmailService;
 import com.jaiylonbabb.uprightcleaningservices.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -35,7 +37,8 @@ public class AppointmentController {
     private AppointmentService appointmentService;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private EmailService emailService;
     @Autowired
     private AppointmentRepository appointmentRepository;
 
@@ -76,26 +79,35 @@ public class AppointmentController {
     }
 
     @PostMapping("/rescheduleAppointment")
-    public String rescheduleAppointment(@RequestParam("appointmentId") Long appointmentId,
-                                        @RequestParam("newDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String newDate) {
-        appointmentService.rescheduleAppointment(appointmentId, newDate);
-        return "redirect:/userProfile";
-    }
+    public String rescheduleAppointment(
+            @RequestParam Long appointmentId,
+            @RequestParam String newDate,
+            RedirectAttributes redirectAttributes) {
 
-    @PostMapping("/cancelAppointment")
-    public String cancelAppointment(@RequestParam Long appointmentId, @RequestParam Long userId, Model model) {
-        boolean isCancelled = appointmentService.cancelAppointment(appointmentId, userId);
-        if (isCancelled) {
-            model.addAttribute("message", "Appointment successfully cancelled.");
-        } else {
-            model.addAttribute("error", "Failed to cancel the appointment. Please try again.");
+        try {
+            appointmentService.rescheduleAppointment(appointmentId, newDate);
+            redirectAttributes.addFlashAttribute("successMessage", "Appointment rescheduled successfully.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "The selected date is not available or appointment not found.");
         }
         return "redirect:/user/profile";
     }
 
-    private boolean cancelAppointment(Long appointmentId, Long userId) {
-        return true;
+
+    @GetMapping("/checkDateAvailability")
+    @ResponseBody
+    public boolean checkDateAvailability(@RequestParam String newDate) {
+        return appointmentService.isDateAvailable(newDate);
     }
+    @PostMapping("/cancelAppointment")
+    public String cancelAppointment(@RequestParam Long appointmentId, @RequestParam Long userId, RedirectAttributes redirectAttributes) {
+        // Cancel the appointment
+        appointmentService.cancelAppointment(appointmentId);
+        redirectAttributes.addFlashAttribute("successMessage", "Appointment canceled successfully.");
+        return "redirect:/user/profile";
+    }
+
+
 // Helper method to get the currently logged-in user's email
     private String getCurrentUserEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -105,6 +117,8 @@ public class AppointmentController {
         }
         return null;
     }
+
+
 
     @GetMapping("/checkDateTimeAvailability")
     public ResponseEntity<Boolean> checkDateTimeAvailability(@RequestParam String dateTime) {

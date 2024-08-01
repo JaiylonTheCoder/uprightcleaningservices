@@ -158,6 +158,12 @@
 
         <div id="view1" class="content">
             <!--             <h1>Appointments</h1>-->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <p th:text="${errorMessage}"></p>
+            </div>
             <div class="appointments-container">
                 <div class="appointment-card" th:each="appointment : ${appointments}">
                     <div class="card-header">
@@ -170,31 +176,28 @@
                         <p><i class="fas fa-phone"></i> <span th:text="${appointment.phoneNumber}"></span></p>
                     </div>
                     <div class="card-actions">
-                        <button class="btn btn-info" onclick="toggleDetails(this)">More Info</button>
-<!--                        <button class="btn btn-danger" th:onclick="'confirmCancel(' + ${appointment.appointmentId} + ')'">Cancel Appointment</button>-->
-                        <form th:action="@{/cancelAppointment}" method="post" id="cancelForm_${appointment.appointmentId}">
+<!--                        <button class="btn btn-info" onclick="toggleDetails(this)">More Info</button>-->
+                        <form th:action="@{/cancelAppointment}" method="post" th:id="'cancelForm_' + ${appointment.appointmentId}">
                             <input type="hidden" name="appointmentId" th:value="${appointment.appointmentId}"/>
                             <input type="hidden" name="userId" th:value="${userId}"/>
                             <button type="button" class="btn btn-danger" th:onclick="'confirmCancel(' + ${appointment.appointmentId} + ')'">Cancel Appointment</button>
                         </form>
                     </div>
-                    <div class="card-details" style="display:none;">
-                        <p><strong>Email:</strong> <span th:text="${appointment.email}"></span></p>
-                        <form th:action="@{/rescheduleAppointment}" method="post">
-                            <input type="hidden" name="appointmentId" th:value="${appointment.appointmentId}" />
-                            <input type="date" name="newDate" required />
-                            <button type="submit">Reschedule</button>
-                        </form>
-                    </div>
+                    <form th:action="@{/rescheduleAppointment}" method="post" onsubmit="return checkDateAvailability(this)">
+                        <input type="hidden" name="appointmentId" th:value="${appointment.appointmentId}" />
+                        <input type="hidden" name="userEmail" th:value="${appointment.email}" />
+                        <input type="hidden" name="adminEmail" th:value="${adminEmail}" />
+                        <input type="hidden" name="userName" th:value="${appointment.name}" />
+                        <div class="form-group">
+                            <label for="newDate_${appointment.appointmentId}">New Date:</label>
+                            <input type="date" id="newDate_${appointment.appointmentId}" name="newDate" required class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-warning">Reschedule</button>
+                    </form>
                 </div>
             </div>
 
         </div>
-        <!--        hidden form-->
-        <!--        <form id="cancelForm" th:action="@{/cancelAppointment}" method="post" style="display: none;">-->
-        <!--            <input type="hidden" id="cancelFormAppointmentId" name="appointmentId">-->
-        <!--            <input type="hidden" id="cancelFormUserId" name="userId" th:value="${userId}">-->
-        <!--        </form>-->
 
         <div id="view2" class="content">
             <h1>Your Invoices</h1>
@@ -340,12 +343,34 @@
 </script>
 <script>
     function confirmCancel(appointmentId) {
-        if (confirm("Are you sure you want to cancel this appointment?")) {
-            // Submit the form
-            document.getElementById('cancelForm_' + appointmentId).submit();
+        var formId = 'cancelForm_' + appointmentId;
+        var form = document.getElementById(formId);
+        if (form) {
+            if (confirm("Are you sure you want to cancel this appointment?")) {
+                form.submit();
+            }
         } else {
-            // User clicked cancel on the confirmation prompt, do nothing (optional: display a message)
+            console.error("Form with ID " + formId + " not found.");
         }
+    }
+
+    function checkDateAvailability(form) {
+        var newDate = form.newDate.value;
+        var isAvailable = false;
+        $.ajax({
+            url: '/checkDateAvailability',
+            type: 'GET',
+            async: false, // Note: This will make the request synchronous
+            data: { newDate: newDate },
+            success: function(response) {
+                isAvailable = response;
+            }
+        });
+        if (!isAvailable) {
+            alert("The selected date is not available. Please choose another date.");
+            return false;
+        }
+        return true;
     }
 </script>
 <script>
@@ -476,6 +501,7 @@
         }
         function confirmCancel(appointmentId) {
             if (confirm("Are you sure you want to cancel this appointment?")) {
+                console.log("In second cancel")
                 document.getElementById('cancelForm_' + appointmentId).submit();
             }
         }
