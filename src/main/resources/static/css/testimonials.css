@@ -1,7 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 .testimonial-section{
-    margin-top: 25px;
+    /*margin-top: 25px;*/
+    margin-bottom: 50px; /* Space between testimonials and footer */
+    min-height: 300px;
 }
 .snip1533 {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
@@ -9,7 +11,7 @@
     display: inline-block;
     font-family: 'Roboto', Arial, sans-serif;
     font-size: 16px;
-    margin: 35px 10px 10px;
+    margin: 20px auto;
     max-width: 310px;
     min-width: 250px;
     position: relative;
@@ -75,7 +77,23 @@
     margin: 0 0 20px;
 }
 
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .snip1533 {
+        max-width: 60%; /* Cards take up most of the screen width */
+        margin: 20px auto; /* Center the cards */
+        display: block; /* Stack cards vertically */
+    }
+}
 
+@media screen and (max-width: 480px) {
+    .snip1533 {
+        font-size: 14px; /* Smaller font size for small screens */
+        padding: 10px; /* Reduce padding */
+        max-width: 100%; /* Ensure cards are full width */
+        margin: 10px 0; /* Reduced margin for small screens */
+    }
+}
 
 body {
     background-color: #212121;

@@ -177,7 +177,7 @@
                     </div>
                     <div class="card-actions">
 <!--                        <button class="btn btn-info" onclick="toggleDetails(this)">More Info</button>-->
-                        <form th:action="@{/cancelAppointment}" method="post" th:id="'cancelForm_' + ${appointment.appointmentId}">
+                        <form th:action="@{/cancelAppointment}" method="post" th:if="${appointment.status != 'Canceled'}" th:id="'cancelForm_' + ${appointment.appointmentId}">
                             <input type="hidden" name="appointmentId" th:value="${appointment.appointmentId}"/>
                             <input type="hidden" name="userId" th:value="${userId}"/>
                             <button type="button" class="btn btn-danger" th:onclick="'confirmCancel(' + ${appointment.appointmentId} + ')'">Cancel Appointment</button>
@@ -194,6 +194,9 @@
                         </div>
                         <button type="submit" class="btn btn-warning">Reschedule</button>
                     </form>
+                    <div class="card-details" style="display:none;">
+                        <p><strong>Email:</strong> <span th:text="${appointment.email}"></span></p>
+                    </div>
                 </div>
             </div>
 
@@ -273,14 +276,6 @@
     </div>
 </div>
 
-<div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Are you sure you want to cancel this appointment?</p>
-        <button id="confirmCancel">Yes, Cancel</button>
-        <button id="closeModal">No, Go Back</button>
-    </div>
-</div>
 <script th:src="@{/js/script.js}"></script>
 <!-- Include DataTables JS -->
 <!--jQuery-->

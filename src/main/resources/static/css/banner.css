@@ -13,6 +13,7 @@
     text-align: center;
     font-family: 'Roboto', sans-serif;
     padding: 20px;
+    transition: height 0.3s ease
 }
 
 .banner-video {
@@ -42,12 +43,14 @@
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+    transition: font-size 0.3s ease;
 }
 
 .banner-message p {
     font-size: 24px;
     margin: 10px 0 20px;
     font-weight: 400;
+    transition: font-size 0.3s ease;
 }
 
 .banner-buttons ul {
@@ -55,7 +58,7 @@
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 15px; /* Adjust spacing between buttons as needed */
+    gap: 15px;
 }
 
 .banner-buttons li {
@@ -72,7 +75,7 @@
     border-radius: 5px;
     text-align: center;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, font-size 0.3s ease, padding 0.3s ease;
     cursor: pointer;
 }
 
@@ -92,4 +95,83 @@
     font-size: 16px;
     margin: 10px;
     cursor: pointer;
+    transition: font-size 0.3s ease, padding 0.3s ease;
+}
+/* Media Queries for Responsive Design */
+@media (max-width: 1200px) {
+    .banner-section {
+        height: 80vh; /* Reduce height */
+    }
+
+    .banner-message h1 {
+        font-size: 40px; /* Reduce font size */
+    }
+
+    .banner-message p {
+        font-size: 20px; /* Reduce font size */
+    }
+
+    .btn {
+        padding: 12px 25px; /* Adjust padding */
+        font-size: 16px; /* Adjust font size */
+    }
+}
+
+@media (max-width: 992px) {
+    .banner-section {
+        height: 70vh; /* Further reduce height */
+    }
+
+    .banner-message h1 {
+        font-size: 32px; /* Further reduce font size */
+    }
+
+    .banner-message p {
+        font-size: 18px; /* Further reduce font size */
+    }
+
+    .btn {
+        padding: 10px 20px; /* Adjust padding */
+        font-size: 14px; /* Adjust font size */
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-section {
+        height: 60vh; /* Further reduce height */
+        padding: 15px; /* Reduce padding */
+    }
+
+    .banner-message h1 {
+        font-size: 18px; /* Further reduce font size */
+    }
+
+    .banner-message p {
+        font-size: 16px; /* Further reduce font size */
+    }
+
+    .btn {
+        padding: 8px 18px; /* Adjust padding */
+        font-size: 14px; /* Adjust font size */
+    }
+}
+
+@media (max-width: 576px) {
+    .banner-section {
+        height: 50vh; /* Further reduce height */
+        padding: 10px; /* Further reduce padding */
+    }
+
+    .banner-message h1 {
+        font-size: 24px; /* Further reduce font size */
+    }
+
+    .banner-message p {
+        font-size: 14px; /* Further reduce font size */
+    }
+
+    .btn {
+        padding: 8px 16px; /* Adjust padding */
+        font-size: 12px; /* Adjust font size */
+    }
 }

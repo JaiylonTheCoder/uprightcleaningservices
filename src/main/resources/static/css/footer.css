@@ -138,3 +138,26 @@ form .g-inp{
     text-decoration: none;
     cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+    .f-item-con {
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align items to the start */
+        padding: 1rem 2rem; /* Adjust padding */
+        margin-top: 30rem;
+    }
+
+    .g-i-t {
+        width: 100%; /* Make the form section take full width */
+        margin-top: 1rem; /* Add some space above the form section */
+    }
+
+    footer .cr-con {
+        padding: 1rem 2rem; /* Adjust padding for the copyright section */
+    }
+
+    footer {
+        margin-top: 2rem; /* Add space at the top to avoid overlap */
+    }
+}

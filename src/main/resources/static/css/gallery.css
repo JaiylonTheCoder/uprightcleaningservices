@@ -47,3 +47,23 @@
 .gallery__item input[type="radio"] {
     display: none;
 }
+
+/* Responsive Design for Vertical Alignment */
+@media screen and (max-width: 1024px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust column sizes */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust column sizes */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .gallery {
+        grid-template-columns: 1fr; /* Single column for very small screens */
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}

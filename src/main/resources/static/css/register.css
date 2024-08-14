@@ -54,7 +54,7 @@ body {
 }
 
 textarea#address {
-    height: 100px; /* Fixed height for the address box */
+    height: 100px;
 }
 
 .btn-eco-friendly {
@@ -83,5 +83,18 @@ textarea#address {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+/* Media Queries */
+@media (max-width: 480px) {
+    .container {
+        max-width: 90%; /* Increased width on very small screens */
+        padding: 15px; /* Reduced padding */
+    }
+
+    textarea#address {
+        height: 80px; /* Adjusted height for smaller screens */
     }
 }

@@ -231,3 +231,99 @@ button:hover {
     margin-top: 16px;
     text-align: center;
 }
+
+
+
+/* Media query for tablets */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "header"
+            "main"
+            "sidenav";
+    }
+
+    .side-navbar {
+        grid-area: sidenav;
+        padding: 10px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .side-navbar ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0;
+    }
+
+    .side-navbar li {
+        list-style-type: none;
+    }
+
+    .side-navbar li a {
+        padding: 10px;
+        display: block;
+        text-align: center;
+    }
+
+    .main-section {
+        padding: 10px;
+    }
+}
+
+/* Media query for mobile phones */
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "header"
+            "main"
+            "sidenav";
+    }
+
+    .top-navbar p {
+        text-align: center;
+    }
+
+    .side-navbar {
+        grid-area: sidenav;
+        padding: 5px;
+    }
+
+    .side-navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .side-navbar li a {
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    .main-section {
+        padding: 10px;
+    }
+
+    .appointment-card, .invoice-card {
+        margin-bottom: 20px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .card-body p {
+        margin: 5px 0;
+    }
+
+    .form-group label, .form-group input, .form-group select {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}

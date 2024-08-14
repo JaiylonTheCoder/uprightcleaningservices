@@ -1,8 +1,7 @@
 .services-section {
-    /*background-image: url("../img/abstract-envelope.png");*/
     background: #212121;
     padding: 50px 20px;
-    height: 100%;
+    height: auto;
 }
 
 .service-body {
@@ -17,6 +16,7 @@
     flex-wrap: wrap;
     gap: 40px;
     margin-top: 45px;
+    justify-content: space-around;
 }
 
 .service-card {
@@ -33,6 +33,7 @@
     color: #333;
     position: relative;
     overflow: hidden;
+    transition: transform 0.3s ease;
 }
 
 #card-1 {
@@ -113,4 +114,32 @@
 
 .custom-shape-divider-top-1718127610 .shape-fill {
     fill: #FFFFFF;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .service-card {
+        flex: 1 1 calc(33.333% - 20px); /* 3 cards per row */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .service-card {
+        flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .services-cards {
+        flex-direction: column; /* Stack cards vertically */
+        gap: 20px; /* Reduce spacing */
+    }
+
+    .service-card {
+        flex: 1 1 100%; /* Full width cards */
+    }
+
+    .card-body {
+        display: none; /* Hide card body on small screens */
+    }
 }

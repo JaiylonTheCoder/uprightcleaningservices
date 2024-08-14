@@ -30,17 +30,13 @@
             color: #61DAFB;
         }
     </style>
-<!--    <script>-->
-<!--        document.addEventListener('DOMContentLoaded', () => {-->
-<!--    gsap.to('.banner-section', { duration: 2, opacity: 1, ease: 'power2.inOut' });-->
-<!--});-->
-<!--    </script>-->
+
 </head>
 <body>
 <nav>
     <div class="logo" style="display: flex; align-items: center;">
         <img th:src="@{/img/LOGO.png}" alt="logo" style="height: 50px; margin-right: 20px;">
-        <span style="color:#08A045; font-size:26px; font-weight:bold; letter-spacing: 1px;">Upright Cleaning Services</span>
+<!--        <span style="color:#08A045; font-size:26px; font-weight:bold; letter-spacing: 1px;">Upright Cleaning Services</span>-->
     </div>
     <div class="hamburger" id="hamburger">
         <div class="line1"></div>
@@ -48,6 +44,7 @@
         <div class="line3"></div>
     </div>
     <ul class="nav-links" id="nav-links">
+        <li id="close-icon">&times;</li>
         <li><a th:href="@{/index}">Home</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#gallery">Gallery</a></li>
@@ -82,7 +79,7 @@
     </div>
     <div class="banner-buttons">
         <li th:if="${#authorization.expression('!isAuthenticated()')}">
-            <button class="signup-button btn" th:href="@{/register}">Sign Up</button>
+            <a th:href="@{/register}"><button class="signup-button btn" th:href="@{/register}">Sign Up</button></a>
         </li>
         <a href="#services" class="cta-button btn">Learn More</a>
     </div>
@@ -210,39 +207,22 @@
     <div class='cr-con'>Copyright &copy; 2024 | Upright Cleaning Services</div>
 </footer>
 <script>
-    function showSuccessModal(event) {
-        event.preventDefault();
-        var form = event.target;
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        const closeBtn = document.getElementById('close-icon');
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const hamburger = document.getElementById("hamburger");
-            const navLinks = document.getElementById("nav-links");
-
-            hamburger.addEventListener("click", () => {
-                navLinks.classList.toggle("open");
-                hamburger.classList.toggle("toggle");
-            });
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            hamburger.classList.toggle('toggle');
         });
 
-        // Simulate a form submission delay for demo purposes
-        setTimeout(function() {
-            form.submit(); // Comment this line if you handle form submission via AJAX
-            var modal = document.getElementById("successModal");
-            var span = document.getElementsByClassName("close")[0];
+        closeBtn.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            hamburger.classList.remove('toggle');
+        });
 
-            modal.style.display = "block";
-
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        }, 500);
-    }
+    });
 
 </script>
 </body>
