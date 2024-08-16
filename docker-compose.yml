@@ -13,7 +13,7 @@ services:
       - "3307:3306"
 
   app:
-    image: uprightcleaningservices
+    build: .
     container_name: uprightcleaningservices
     environment:
       DB_URL: jdbc:mysql://mysql:3306/upright_cleaning_services_DB
