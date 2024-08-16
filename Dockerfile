@@ -15,3 +15,4 @@ COPY --from=build /app/target/uprightcleaningservices.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "uprightcleaningservices.jar"]
 
+#comment
