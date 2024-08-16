@@ -13,6 +13,6 @@ FROM eclipse-temurin:21
 WORKDIR /app
 COPY --from=build /app/target/uprightcleaningservices.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "uprightcleaningservices.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
 #comment
