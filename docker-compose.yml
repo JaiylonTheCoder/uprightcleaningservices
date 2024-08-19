@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: upright_cleaning_services_DB
       MYSQL_USER: root
-      MYSQL_PASSWORD: password
+      MYSQL_PASSWORD: M@nUnit3dBaCk0nT0p
     ports:
       - "3307:3306"
 
@@ -18,7 +18,7 @@ services:
     environment:
       DB_URL: jdbc:mysql://mysql:3306/upright_cleaning_services_DB
       DB_USERNAME: root
-      DB_PASSWORD: password
+      DB_PASSWORD: M@nUnit3dBaCk0nT0p
     ports:
       - "8000:8080"
     depends_on:
